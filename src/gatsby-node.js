@@ -70,7 +70,8 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
     }
   }
 
-  const generatePage = (routed, language) => {
+  const generatePage = (routed, lang) => {
+    const language = createPagesWithPrefix ? page.context && page.context.language || lang : lang;
     const messages = getMessages(path, language)
     const newPath = routed ? `/${language}${page.path}` : page.path
     return {

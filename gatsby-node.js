@@ -91,7 +91,8 @@ function () {
               }
             };
 
-            generatePage = function generatePage(routed, language) {
+            generatePage = function generatePage(routed, lang) {
+              var language = createPagesWithPrefix ? page.context && page.context.language || lang : lang;
               var messages = getMessages(path, language);
               var newPath = routed ? "/" + language + page.path : page.path;
               return (0, _extends2.default)({}, page, {
