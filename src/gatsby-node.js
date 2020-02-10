@@ -49,6 +49,7 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
     languages = ["en"],
     defaultLanguage = "en",
     redirect = false,
+    createPagesWithPrefix = true
   } = pluginOptions
 
   const getMessages = (path, language) => {
@@ -93,12 +94,14 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
   deletePage(page)
   createPage(newPage)
 
-  languages.forEach(language => {
-    const localePage = generatePage(true, language)
-    const regexp = new RegExp("/404/?$")
-    if (regexp.test(localePage.path)) {
-      localePage.matchPath = `/${language}/*`
-    }
-    createPage(localePage)
-  })
+  if (createPagesWithPrefix) {
+    languages.forEach(language => {
+      const localePage = generatePage(true, language)
+      const regexp = new RegExp("/404/?$")
+      if (regexp.test(localePage.path)) {
+        localePage.matchPath = `/${language}/*`
+      }
+      createPage(localePage)
+    })
+  }
 }
